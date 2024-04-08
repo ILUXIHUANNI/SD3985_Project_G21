@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GhostMonsterController : MonoBehaviour
@@ -10,9 +11,9 @@ public class GhostMonsterController : MonoBehaviour
     Vector2 move;
     Vector2 lookDirection = new Vector2(1, 0);
     bool facingRight = false;
-
     Animator animator;
 
+    [SerializeField] bool isDeath = false;
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -34,14 +35,16 @@ public class GhostMonsterController : MonoBehaviour
         if (transform.position.x < endPoint.position.x)
         {
             facingRight = true;
-        }else if (transform.position.x > startPoint.position.x)
+        }
+        else if (transform.position.x > startPoint.position.x)
         {
             facingRight = false;
         }
         if (facingRight)
         {
             move = transform.right;
-        }else
+        }
+        else
         {
             move = -transform.right;
         }

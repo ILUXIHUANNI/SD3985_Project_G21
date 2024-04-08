@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - DeathArea
+  - GameOver
+  - GhostMonster
+  - SimplePlant
   layers:
   - Default
   - TransparentFX
@@ -17,8 +20,8 @@ TagManager:
   - Ground
   - Confiner
   - Player
-  - 
-  - 
+  - Organs
+  - Monsters
   - 
   - 
   - 
