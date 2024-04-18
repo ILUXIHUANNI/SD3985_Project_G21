@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour
     Vector2 lookDirection = new Vector2(1, 0);
 
     Animator animator;
+    Vector2 loadPosition;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        SaveManager.instance.Load();
     }
 
     // Update is called once per frame
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         //rb.AddForce(move * speed, ForceMode2D.Impulse);
-        rb.velocity = new Vector2(move.x *speed, rb.velocity.y);
+        rb.velocity = new Vector2(move.x * speed, rb.velocity.y);
     }
 
 
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour
     void isRunning()
     {
         if (Input.GetButton("Horizontal"))
-            animator.SetBool("run",true);
+            animator.SetBool("run", true);
         else
             animator.SetBool("run", false);
     }

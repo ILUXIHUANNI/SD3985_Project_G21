@@ -13,10 +13,11 @@ public class GhostMonsterController : MonoBehaviour
     bool facingRight = false;
     Animator animator;
 
-    [SerializeField] bool isDeath = false;
-    private void Start()
+    MonsterDestory monsterDestory;
+    private void Awake()
     {
         animator = GetComponent<Animator>();
+        monsterDestory = GetComponent<MonsterDestory>();
     }
 
     void Update()
@@ -32,22 +33,30 @@ public class GhostMonsterController : MonoBehaviour
 
     void Movement()
     {
-        if (transform.position.x < endPoint.position.x)
+        if (monsterDestory.getisDeath())
         {
-            facingRight = true;
-        }
-        else if (transform.position.x > startPoint.position.x)
-        {
-            facingRight = false;
-        }
-        if (facingRight)
-        {
-            move = transform.right;
+            move = Vector2.zero;
         }
         else
         {
-            move = -transform.right;
+            if (transform.position.x < endPoint.position.x)
+            {
+                facingRight = true;
+            }
+            else if (transform.position.x > startPoint.position.x)
+            {
+                facingRight = false;
+            }
+            if (facingRight)
+            {
+                move = transform.right;
+            }
+            else
+            {
+                move = -transform.right;
+            }
         }
+        
     }
     void flip()
     {
@@ -58,5 +67,10 @@ public class GhostMonsterController : MonoBehaviour
         }
 
         animator.SetFloat("LookX", lookDirection.x);
+    }
+
+    public void ChangeSpeed(float speed)
+    {
+        this.speed = speed;
     }
 }

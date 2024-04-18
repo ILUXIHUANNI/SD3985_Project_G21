@@ -9,12 +9,16 @@ public class MonsterDestory : MonoBehaviour
     bool isDeath = false;
 
     Animator animator;
-    float aTime = 1f;
-    float aTimer = 0f;
+    bool deathAnimation;
+
+    Vector2 move;
+    Vector2 lookDirection = new Vector2(1, 0);
+    [SerializeField] GhostMonsterController GhostMonsterController;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        deathAnimation = false;
     }
 
     void Update()
@@ -30,6 +34,13 @@ public class MonsterDestory : MonoBehaviour
             if (Input.GetMouseButton(1))
             {
                 timer += Time.deltaTime;
+                if (!deathAnimation)
+                {
+                    deathAnimation = true;
+                    flip();
+                    GhostMonsterController.ChangeSpeed(0.025f);
+                    animator.SetTrigger("Die");
+                }
             }
             if (timer > time)
             {
@@ -39,6 +50,9 @@ public class MonsterDestory : MonoBehaviour
             if (Input.GetMouseButtonUp(1))
             {
                 timer = 0;
+                animator.SetTrigger("Die");
+                GhostMonsterController.ChangeSpeed(0.05f);
+                deathAnimation = false;
             }
         }
     }
@@ -47,12 +61,23 @@ public class MonsterDestory : MonoBehaviour
     {
         if (die)
         {
-            animator.SetTrigger("Die");
-            aTimer += Time.deltaTime;
-            if (aTimer > aTime)
-            {
-                Destroy(this.gameObject);
-            }
+            Destroy(this.gameObject);
         }
+    }
+
+    public bool getisDeath()
+    {
+        return isDeath;
+    }
+
+    void flip()
+    {
+        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+        {
+            lookDirection.Set(move.x, 0);
+            lookDirection.Normalize();
+        }
+
+        animator.SetFloat("LookX", lookDirection.x);
     }
 }
