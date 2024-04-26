@@ -8,6 +8,8 @@ public class Restart : MonoBehaviour
     float time = 1.5f;
     float timer = 0;
 
+    public static bool restart;
+
     void Update()
     {
         if (DeathArea.isDeath)
@@ -15,9 +17,15 @@ public class Restart : MonoBehaviour
             timer += Time.deltaTime;
             if (Input.GetKey(KeyCode.R) && timer > time)
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 DeathArea.isDeath = false;
+                restart = true;
             }
         }
+    }
+
+    public bool isRestart()
+    {
+        return restart;
     }
 }

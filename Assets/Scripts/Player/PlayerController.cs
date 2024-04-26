@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,11 +11,19 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     Vector2 loadPosition;
 
-    void Start()
+    AudioManager audioManager;
+    int isDeath = 0;
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        SaveManager.instance.Load();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+    }
+
+    private void Start()
+    {
+        LoadPosition();
     }
 
     // Update is called once per frame
@@ -48,16 +55,45 @@ public class PlayerController : MonoBehaviour
     void isRunning()
     {
         if (Input.GetButton("Horizontal"))
+        {
             animator.SetBool("run", true);
+        }
         else
+        {
             animator.SetBool("run", false);
+        }
     }
 
     private void Movement()
     {
         if (DeathArea.isDeath)
+        {
+            if (isDeath == 0)
+                audioManager.PlaySFX(audioManager.playerDeath);
             move = new Vector2(0, 0);
+            isDeath = 1;
+        }
         else
             move = new Vector2(Input.GetAxis("Horizontal"), 0);
+    }
+
+
+    void LoadPosition()
+    {
+        SaveManager.instance.Load();
+        if (SaveManager.instance.saveFile.scene == SceneManager.GetActiveScene().buildIndex && !Restart.restart)
+        {
+            transform.position = SaveManager.instance.saveFile.position;
+        }
+    }
+
+    public Vector2 getPosition()
+    {
+        return transform.position;
+    }
+
+    public void setSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 }

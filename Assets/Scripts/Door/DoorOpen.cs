@@ -8,6 +8,7 @@ public class DoorOpen : MonoBehaviour
     Animator animator;
 
     [SerializeField] GameObject plant;
+    [SerializeField] int scene;
     Plant plantbool;
 
     bool isOpen = false;
@@ -30,7 +31,7 @@ public class DoorOpen : MonoBehaviour
         {
             if (isOpen && Input.GetKey(KeyCode.E))
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(scene);
             }
         }
     }

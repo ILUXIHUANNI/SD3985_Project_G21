@@ -1,10 +1,6 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SaveManager : MonoBehaviour
 {
@@ -13,6 +9,10 @@ public class SaveManager : MonoBehaviour
     public string savePath;
     public string saveName = "/mySave.dat";
 
+    [SerializeField] Slider Master;
+    [SerializeField] Slider BGM;
+    [SerializeField] Slider SFX;
+
     private void Awake()
     {
         instance = this;
@@ -20,11 +20,14 @@ public class SaveManager : MonoBehaviour
     void Start()
     {
         savePath = Application.persistentDataPath + saveName;
+        //Debug.Log(savePath);
     }
 
     public void New()
     {
         saveFile = new SaveFile();
+        Save();
+        //saveFile.position = new Vector2 (-55.2f, -21.94f);
         SceneManager.LoadScene(1);
     }
 
@@ -32,11 +35,23 @@ public class SaveManager : MonoBehaviour
     {
         saveFile.position = player.transform.position;
         saveFile.scene = SceneManager.GetActiveScene().buildIndex;
+        saveFile.master = Master.value;
+        saveFile.bgm = BGM.value;
+        saveFile.sfx = SFX.value;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+
+    public void Save()
+    {
+        saveFile.master = Master.value;
+        saveFile.bgm = BGM.value;
+        saveFile.sfx = SFX.value;
         BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
     }
     public void Load()
     {
         saveFile = BinarySaveSystem.ReadFromBinaryFile<SaveFile>(savePath);
+        //Debug.Log(savePath);
     }
 
 }
@@ -54,6 +69,9 @@ public class SaveFile
             y = value.y;
         }
     }
-    public float x, y, z;
+    public float x, y;
 
+    public float master;
+    public float bgm;
+    public float sfx;
 }
