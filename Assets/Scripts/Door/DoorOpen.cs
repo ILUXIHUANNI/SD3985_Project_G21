@@ -31,6 +31,7 @@ public class DoorOpen : MonoBehaviour
         {
             if (isOpen && Input.GetKey(KeyCode.E))
             {
+                SaveManager.instance.Save(0);
                 SceneManager.LoadScene(scene);
             }
         }

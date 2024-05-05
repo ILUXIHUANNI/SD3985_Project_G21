@@ -12,6 +12,7 @@ TagManager:
   - Beholder
   - Checkpoint1
   - Checkpoint2
+  - GateDeathArea
   layers:
   - Default
   - TransparentFX

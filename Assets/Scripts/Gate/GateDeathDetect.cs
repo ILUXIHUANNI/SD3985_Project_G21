@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathArea : MonoBehaviour
+public class GateDeathDetect : MonoBehaviour
 {
-    public static bool isDeath = false; 
     Animator animator;
-    Animator[] gameover; 
+    Animator[] gameover;
     float time = 1.5f;
     float timer = 0;
 
@@ -19,7 +18,7 @@ public class DeathArea : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            isDeath = true;
+            DeathArea.isDeath = true;
             animator.SetTrigger("Death");
         }
     }
@@ -31,7 +30,7 @@ public class DeathArea : MonoBehaviour
 
     void Death()
     {
-        if (isDeath)
+        if (DeathArea.isDeath)
         {
             timer += Time.deltaTime;
             if (timer > time)
