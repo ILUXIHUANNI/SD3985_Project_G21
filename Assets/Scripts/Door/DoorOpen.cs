@@ -20,7 +20,7 @@ public class DoorOpen : MonoBehaviour
 
     private void Update()
     {
-        if (plantbool.getLightOn())
+        if (plantbool.getCheck())
             isOpen = true;
         OpenDoor(isOpen);
     }

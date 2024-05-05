@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -84,6 +85,24 @@ public class PlayerController : MonoBehaviour
         if (SaveManager.instance.saveFile.scene == SceneManager.GetActiveScene().buildIndex && !Restart.restart)
         {
             transform.position = SaveManager.instance.saveFile.position;
+            if (SaveManager.instance.saveFile.checkpoint == 1)
+            {
+                GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().setOn();
+            }
+            else if (SaveManager.instance.saveFile.checkpoint == 2)
+            {
+                GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().setOn();
+            }
+        }
+        else if (SaveManager.instance.saveFile.scene == SceneManager.GetActiveScene().buildIndex && Restart.restart && SaveManager.instance.saveFile.checkpoint == 1)
+        {
+            GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().setOn();
+            transform.position = GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().transform.position;
+        }
+        else if (SaveManager.instance.saveFile.scene == SceneManager.GetActiveScene().buildIndex && Restart.restart && SaveManager.instance.saveFile.checkpoint == 2)
+        {
+            GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().setOn();
+            transform.position = GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().transform.position;
         }
     }
 
@@ -95,5 +114,10 @@ public class PlayerController : MonoBehaviour
     public void setSpeed(float newSpeed)
     {
         speed = newSpeed;
+    }
+
+    public void changePostition(Vector2 pos)
+    {
+        transform.position = pos;
     }
 }

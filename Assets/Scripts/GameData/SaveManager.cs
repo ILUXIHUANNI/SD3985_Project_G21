@@ -16,11 +16,7 @@ public class SaveManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-    }
-    void Start()
-    {
         savePath = Application.persistentDataPath + saveName;
-        //Debug.Log(savePath);
     }
 
     public void New()
@@ -41,13 +37,31 @@ public class SaveManager : MonoBehaviour
         BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
     }
 
+    public void Save(int levelCheckpoint)
+    {
+        saveFile.scene = SceneManager.GetActiveScene().buildIndex;
+        saveFile.master = Master.value;
+        saveFile.bgm = BGM.value;
+        saveFile.sfx = SFX.value;
+        saveFile.checkpoint = levelCheckpoint;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+
     public void Save()
     {
         saveFile.master = Master.value;
         saveFile.bgm = BGM.value;
         saveFile.sfx = SFX.value;
+        saveFile.checkpoint = 0;
+        saveFile.deathCount = 0;
         BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
     }
+
+    public void SaveDeathCount(int count)
+    {
+        saveFile.deathCount = count;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }    
     public void Load()
     {
         saveFile = BinarySaveSystem.ReadFromBinaryFile<SaveFile>(savePath);
@@ -74,4 +88,6 @@ public class SaveFile
     public float master;
     public float bgm;
     public float sfx;
+    public int checkpoint;
+    public int deathCount;
 }

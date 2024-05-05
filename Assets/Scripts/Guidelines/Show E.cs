@@ -17,7 +17,7 @@ public class ShowE : MonoBehaviour
 
     private void Update()
     {
-        if (plantbool.getLightOn())
+        if (plantbool.getCheck())
         {
             if (guidelines.active == false)
                 guidelines.SetActive(true);
