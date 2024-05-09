@@ -5,7 +5,13 @@ using UnityEngine;
 public class LightController : MonoBehaviour
 {
     [SerializeField]Animator animator;
+    [SerializeField] PlayerController playerController;
     bool isRightClick;
+
+    float timer = 3f;
+    float time;
+    bool charge;
+    bool isBlueModeLighting;
 
     private void Awake()
     {
@@ -30,19 +36,75 @@ public class LightController : MonoBehaviour
 
     void LightBrightness()
     {
-        if (Input.GetMouseButton(1))
+        if (playerController.GetBlueMode())
         {
-            if (!isRightClick)
+            if (!charge)
             {
-                isRightClick = true;
-                animator.SetBool("RightClick", true);
+                if (time <= timer)
+                {
+                    if (Input.GetMouseButton(1))
+                    {
+                        if (!isRightClick)
+                        {
+                            isRightClick = true;
+                            isBlueModeLighting = true;
+                            animator.SetBool("RightClick", true);
+                        }
+                        time += Time.deltaTime;
+                    }
+                    if (Input.GetMouseButtonUp(1))
+                    {
+                        isBlueModeLighting = false;
+                        animator.SetBool("RightClick", false);
+                        //Debug.Log("Right Click Up");
+                        isRightClick = false;
+                    }
+                    if (!isRightClick && time >= 0)
+                    {
+                        time -= Time.deltaTime;
+                    }
+                }
+                else
+                {
+                    isRightClick = false;
+                    isBlueModeLighting = false;
+                    animator.SetBool("RightClick", false);
+                    charge = true;
+                }
+            }
+            else
+            {
+                if (time >= 0)
+                {
+                    time -= Time.deltaTime;
+                }
+                else 
+                {
+                    charge = false;
+                }
             }
         }
-        if(Input.GetMouseButtonUp(1))
+        else
         {
-            animator.SetBool("RightClick",false);
-            //Debug.Log("Right Click Up");
-            isRightClick = false;
+            if (Input.GetMouseButton(1))
+            {
+                if (!isRightClick)
+                {
+                    isRightClick = true;
+                    animator.SetBool("RightClick", true);
+                }
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                animator.SetBool("RightClick", false);
+                //Debug.Log("Right Click Up");
+                isRightClick = false;
+            }
         }
+    }
+
+    public bool GetBlueModeLitghing()
+    {
+        return isBlueModeLighting;
     }
 }

@@ -33,7 +33,7 @@ public class Checkpoint1 : MonoBehaviour
             animator.SetBool("touch", true);
             boxCollider.enabled = false;
             isOn = true;
-            SaveManager.instance.Save(1);
+            SaveManager.instance.Save(1, SceneManager.GetActiveScene().buildIndex);
         }
     }
 

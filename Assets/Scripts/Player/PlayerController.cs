@@ -15,16 +15,19 @@ public class PlayerController : MonoBehaviour
     AudioManager audioManager;
     int isDeath = 0;
 
+    bool blueMode;
+    [SerializeField] Sprite blueModeSprite;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        //LoadPosition();
     }
 
     private void Start()
     {
-        LoadPosition();
+        //LoadPosition();
     }
 
     // Update is called once per frame
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour
         Movement();
         flip();
         isRunning();
+        changeMode();
     }
 
     private void FixedUpdate()
@@ -84,25 +88,51 @@ public class PlayerController : MonoBehaviour
         SaveManager.instance.Load();
         if (SaveManager.instance.saveFile.scene == SceneManager.GetActiveScene().buildIndex && !Restart.restart)
         {
-            transform.position = SaveManager.instance.saveFile.position;
+            if (SaveManager.instance.saveFile.previousScene == 4 && SceneManager.GetActiveScene().buildIndex == 3)
+                transform.position = new Vector2(57.22f, -19.98501f);
+            else
+                transform.position = SaveManager.instance.saveFile.position;
             if (SaveManager.instance.saveFile.checkpoint == 1)
             {
-                GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().setOn();
+                if (SceneManager.GetActiveScene().buildIndex == 2)
+                    GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().setOn();
+                else if (SceneManager.GetActiveScene().buildIndex == 3)
+                    GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<L2Checkpoint1>().setOn();
             }
             else if (SaveManager.instance.saveFile.checkpoint == 2)
             {
-                GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().setOn();
+                if (SceneManager.GetActiveScene().buildIndex == 2)
+                    GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().setOn();
+                else if (SceneManager.GetActiveScene().buildIndex == 4)
+                    GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<L2Checkpoint2>().setOn();
             }
         }
         else if (SaveManager.instance.saveFile.scene == SceneManager.GetActiveScene().buildIndex && Restart.restart && SaveManager.instance.saveFile.checkpoint == 1)
         {
-            GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().setOn();
-            transform.position = GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().transform.position;
+            if (SceneManager.GetActiveScene().buildIndex == 2)
+            {
+                GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().setOn();
+                transform.position = GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<Checkpoint1>().transform.position;
+            }
+            else if (SceneManager.GetActiveScene().buildIndex == 3)
+            {
+                GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<L2Checkpoint1>().setOn();
+                transform.position = GameObject.FindGameObjectWithTag("Checkpoint1").GetComponent<L2Checkpoint1>().transform.position;
+            }
+
         }
         else if (SaveManager.instance.saveFile.scene == SceneManager.GetActiveScene().buildIndex && Restart.restart && SaveManager.instance.saveFile.checkpoint == 2)
         {
-            GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().setOn();
-            transform.position = GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().transform.position;
+            if (SceneManager.GetActiveScene().buildIndex == 2)
+            {
+                GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().setOn();
+                transform.position = GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<Checkpoint2>().transform.position;
+            }
+            else if (SceneManager.GetActiveScene().buildIndex == 4)
+            {
+                GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<L2Checkpoint2>().setOn();
+                transform.position = GameObject.FindGameObjectWithTag("Checkpoint2").GetComponent<L2Checkpoint2>().transform.position;
+            }
         }
     }
 
@@ -119,5 +149,33 @@ public class PlayerController : MonoBehaviour
     public void changePostition(Vector2 pos)
     {
         transform.position = pos;
+    }
+
+    void changeMode()
+    {
+        SaveManager.instance.Load();
+        if (SaveManager.instance.saveFile.getBlueMode)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (blueMode)
+                {
+                    blueMode = false;
+                    animator.SetBool("White", true);
+                    animator.SetBool("Blue", false);
+                }
+                else
+                {
+                    blueMode = true;
+                    animator.SetBool("Blue", true);
+                    animator.SetBool("White", false);
+                }
+            }
+        }
+    }
+
+    public bool GetBlueMode()
+    {
+        return blueMode;
     }
 }

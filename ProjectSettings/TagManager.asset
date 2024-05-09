@@ -12,7 +12,9 @@ TagManager:
   - Beholder
   - Checkpoint1
   - Checkpoint2
-  - GateDeathArea
+  - Level22Platform
+  - Arrow
+  - FlashLight
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - Organs
   - Monsters
   - Penetrable
-  - 
+  - Arrow
   - 
   - 
   - 

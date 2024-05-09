@@ -14,7 +14,7 @@ public class LightDetection : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        tagsToCheck = new List<string>() { "SimplePlant", "GhostMonster", "Beholder" };
+        tagsToCheck = new List<string>() { "SimplePlant", "GhostMonster", "Beholder", "Arrow" };
     }
 
     List<string> tagsToCheck;

@@ -27,6 +27,12 @@ public class SaveManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void FinishDemo()
+    {
+        saveFile = new SaveFile();
+        Save();
+    }
+
     public void Save(PlayerController player)
     {
         saveFile.position = player.transform.position;
@@ -37,9 +43,9 @@ public class SaveManager : MonoBehaviour
         BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
     }
 
-    public void Save(int levelCheckpoint)
+    public void Save(int levelCheckpoint, int sceneIndex)
     {
-        saveFile.scene = SceneManager.GetActiveScene().buildIndex;
+        saveFile.scene = sceneIndex;
         saveFile.master = Master.value;
         saveFile.bgm = BGM.value;
         saveFile.sfx = SFX.value;
@@ -57,11 +63,48 @@ public class SaveManager : MonoBehaviour
         BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
     }
 
+
     public void SaveDeathCount(int count)
     {
         saveFile.deathCount = count;
         BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
-    }    
+    }
+    
+    public void SaveGetBlueMode(bool get)
+    {
+        saveFile.getBlueMode = get;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+    public void SaveBlueMode(bool isblueMode)
+    {
+        saveFile.blueMode = isblueMode;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+
+    public void SavePreviousScene(int lastScene)
+    {
+        saveFile.previousScene = lastScene;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+
+    public void SaveSimplePlant(bool lightOn)
+    {
+        saveFile.simplePlant = lightOn;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+
+    public void SaveL2Checkpoint1(bool check)
+    {
+        saveFile.L2Checkpoint1 = check;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+
+    public void SaveL2Checkpoint2(bool check)
+    {
+        saveFile.L2Checkpoint2 = check;
+        BinarySaveSystem.WriteToBinaryFile(savePath, saveFile);
+    }
+
     public void Load()
     {
         saveFile = BinarySaveSystem.ReadFromBinaryFile<SaveFile>(savePath);
@@ -90,4 +133,10 @@ public class SaveFile
     public float sfx;
     public int checkpoint;
     public int deathCount;
+    public bool getBlueMode;
+    public bool blueMode;
+    public int previousScene;
+    public bool simplePlant;
+    public bool L2Checkpoint1;
+    public bool L2Checkpoint2;
 }

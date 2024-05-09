@@ -33,6 +33,7 @@ public class Plant : MonoBehaviour
             if (timer > time)
             {
                 lightOn = true;
+                SaveManager.instance.SaveSimplePlant(true);
             }
             else
             {

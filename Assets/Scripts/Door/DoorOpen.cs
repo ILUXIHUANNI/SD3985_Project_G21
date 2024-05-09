@@ -11,6 +11,8 @@ public class DoorOpen : MonoBehaviour
     [SerializeField] int scene;
     Plant plantbool;
 
+    [SerializeField] Animator sceneTransition;
+
     bool isOpen = false;
     private void Awake()
     {
@@ -31,8 +33,9 @@ public class DoorOpen : MonoBehaviour
         {
             if (isOpen && Input.GetKey(KeyCode.E))
             {
-                SaveManager.instance.Save(0);
-                SceneManager.LoadScene(scene);
+                SaveManager.instance.Save(0, SceneManager.GetActiveScene().buildIndex);
+                SaveManager.instance.SaveSimplePlant(false);
+                StartCoroutine(LoadScene());
             }
         }
     }
@@ -43,5 +46,12 @@ public class DoorOpen : MonoBehaviour
         {
             animator.SetTrigger("Door Open");
         }
+    }
+
+    IEnumerator LoadScene()
+    {
+        sceneTransition.SetTrigger("End");
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(scene);
     }
 }

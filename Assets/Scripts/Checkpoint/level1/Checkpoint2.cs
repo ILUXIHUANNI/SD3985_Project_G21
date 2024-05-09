@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Checkpoint2 : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class Checkpoint2 : MonoBehaviour
             isOn = true;
             animator.SetBool("touch", true);
             boxCollider.enabled = false;
-            SaveManager.instance.Save(2);
+            SaveManager.instance.Save(2, SceneManager.GetActiveScene().buildIndex);
         }
     }
 

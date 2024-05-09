@@ -20,7 +20,6 @@ public class DeathArea : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isDeath = true;
-            animator.SetTrigger("Death");
         }
     }
 
@@ -33,6 +32,7 @@ public class DeathArea : MonoBehaviour
     {
         if (isDeath)
         {
+            animator.SetTrigger("Death");
             timer += Time.deltaTime;
             if (timer > time)
             {

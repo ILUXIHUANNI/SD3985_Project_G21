@@ -32,7 +32,7 @@ public class level1 : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             animator.SetBool("touch", true);
-            SaveManager.instance.Save(1);
+            SaveManager.instance.Save(1, SceneManager.GetActiveScene().buildIndex);
         }
     }
 

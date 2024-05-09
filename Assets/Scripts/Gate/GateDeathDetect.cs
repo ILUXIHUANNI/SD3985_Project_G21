@@ -9,6 +9,7 @@ public class GateDeathDetect : MonoBehaviour
     float time = 1.5f;
     float timer = 0;
 
+    [SerializeField] Rigidbody2D gate;
     private void Awake()
     {
         animator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
@@ -32,6 +33,7 @@ public class GateDeathDetect : MonoBehaviour
     {
         if (DeathArea.isDeath)
         {
+            gate.simulated = false;
             timer += Time.deltaTime;
             if (timer > time)
             {
