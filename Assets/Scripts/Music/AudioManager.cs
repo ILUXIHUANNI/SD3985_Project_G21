@@ -13,6 +13,12 @@ public class AudioManager : MonoBehaviour
     public AudioClip audioClipBGM;
     public AudioClip playerDeath;
     public AudioClip monsterDeath;
+    public AudioClip checkpoint;
+    public AudioClip arrowShoot;
+    public AudioClip arrowHit;
+    public AudioClip powerDown;
+    public AudioClip changeMode;
+    public AudioClip blockArrow;
 
     private void Start()
     {

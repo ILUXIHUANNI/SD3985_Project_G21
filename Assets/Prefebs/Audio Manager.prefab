@@ -307,3 +307,9 @@ MonoBehaviour:
   audioClipBGM: {fileID: 8300000, guid: dcdb8298690f4c14da215ff6af551a10, type: 3}
   playerDeath: {fileID: 8300000, guid: b5bcfbe6577c4454bb4a6db0d4719b15, type: 3}
   monsterDeath: {fileID: 8300000, guid: 9aa811050edc3a948b2f1441513fa2df, type: 3}
+  checkpoint: {fileID: 8300000, guid: b3cc2db6096a71e4fb83b898afb3decf, type: 3}
+  arrowShoot: {fileID: 8300000, guid: 6923de6a9aab3414a8867ee6b3b8901e, type: 3}
+  arrowHit: {fileID: 8300000, guid: 8c765245ba1dd754a936b77116d56cfb, type: 3}
+  powerDown: {fileID: 8300000, guid: b0faf0e361960924cb219a83ff34cf37, type: 3}
+  changeMode: {fileID: 8300000, guid: d33062f597e9b8a419e86b44c833626c, type: 3}
+  blockArrow: {fileID: 8300000, guid: 6031083a4bb7ff34b92e220ba162e24b, type: 3}

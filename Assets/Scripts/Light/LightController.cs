@@ -13,9 +13,11 @@ public class LightController : MonoBehaviour
     bool charge;
     bool isBlueModeLighting;
 
+    AudioManager audioManager;
     private void Awake()
     {
         isRightClick = false;
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
     private void FixedUpdate()
     {
@@ -66,6 +68,7 @@ public class LightController : MonoBehaviour
                 }
                 else
                 {
+                    audioManager.PlaySFX(audioManager.powerDown);
                     isRightClick = false;
                     isBlueModeLighting = false;
                     animator.SetBool("RightClick", false);

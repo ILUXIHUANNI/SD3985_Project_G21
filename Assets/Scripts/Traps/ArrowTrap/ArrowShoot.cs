@@ -5,10 +5,11 @@ using UnityEngine;
 public class ArrowShoot : MonoBehaviour
 {
     Rigidbody2D rigidbody2d;
-
+    AudioManager audioManager;
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -33,6 +34,7 @@ public class ArrowShoot : MonoBehaviour
             DeathArea.isDeath = true;
         }
         //Debug.Log("Arrow Collision with " + other.gameObject);
+        audioManager.PlaySFX(audioManager.arrowHit);
         Destroy(gameObject);
     }
 
@@ -40,6 +42,7 @@ public class ArrowShoot : MonoBehaviour
     {
         if (light && GameObject.FindGameObjectWithTag("FlashLight").GetComponent<LightController>().GetBlueModeLitghing())
         {
+            audioManager.PlaySFX(audioManager.blockArrow);
             Destroy(gameObject);
         }
     }

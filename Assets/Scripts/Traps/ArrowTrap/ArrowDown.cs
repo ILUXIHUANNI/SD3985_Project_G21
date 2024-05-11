@@ -9,6 +9,12 @@ public class ArrowDown : MonoBehaviour
     float time;
     [SerializeField] float force;
 
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+    }
     private void Update()
     {
         Shoot();
@@ -25,6 +31,7 @@ public class ArrowDown : MonoBehaviour
             //arrowShoot.Shoot(-transform.up.x, -transform.up.y, speed);
             /*arrowShoot.Shoot(-transform.up, speed);*/
             arrowShoot.Shoot(-transform.up, force);
+            audioManager.PlaySFX(audioManager.arrowShoot);
             time = 0;
         }
     }

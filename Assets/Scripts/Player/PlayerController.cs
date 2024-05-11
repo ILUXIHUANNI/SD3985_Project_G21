@@ -156,16 +156,18 @@ public class PlayerController : MonoBehaviour
         SaveManager.instance.Load();
         if (SaveManager.instance.saveFile.getBlueMode)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyUp(KeyCode.Q))
             {
                 if (blueMode)
                 {
+                    audioManager.PlaySFX(audioManager.changeMode);
                     blueMode = false;
                     animator.SetBool("White", true);
                     animator.SetBool("Blue", false);
                 }
                 else
                 {
+                    audioManager.PlaySFX(audioManager.changeMode);
                     blueMode = true;
                     animator.SetBool("Blue", true);
                     animator.SetBool("White", false);

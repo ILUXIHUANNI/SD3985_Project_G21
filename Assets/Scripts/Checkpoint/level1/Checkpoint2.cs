@@ -17,6 +17,7 @@ public class Checkpoint2 : MonoBehaviour
 
     bool isOn;
 
+    AudioManager audioManager;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -24,6 +25,7 @@ public class Checkpoint2 : MonoBehaviour
         plantbool = plant.GetComponent<Plant>();
         checkpoint1 = checkObject.GetComponent<Checkpoint1>();
         animator = GetComponent<Animator>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -35,6 +37,7 @@ public class Checkpoint2 : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            audioManager.PlaySFX(audioManager.checkpoint);
             isOn = true;
             animator.SetBool("touch", true);
             boxCollider.enabled = false;
